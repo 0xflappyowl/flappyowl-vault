@@ -97,8 +97,8 @@ function NavBar() {
             <a href="/" className="text-white nav-link_ref">
               Home
             </a>
-            <a href="/earn" className="text-white nav-link_ref">
-              Earn
+            <a href="/vault" className="text-white nav-link_ref">
+              vault
             </a>
             <a href="/#about" className="text-white nav-link_ref">
               About

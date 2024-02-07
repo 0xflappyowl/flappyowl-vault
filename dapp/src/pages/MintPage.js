@@ -12,9 +12,12 @@ import { ethers } from "ethers";
 // import axios from "axios";
 import { Table } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+
+// eslint-disable-next-line
+// import ReferralLinkGenerator from "../components/ReferralLinkGenerator.jsx"
 
 import stakingContract from "../artifacts/utils/StakingVault.sol/StakingVault.json";
 import nftContract from "../artifacts/ERC721/StakeableNft.sol/StakeableNft.json";
@@ -26,13 +29,15 @@ import {
 } from "../utils/contracts-config";
 import networksMap from "../utils/networksMap.json";
 
-
 // Convert an integer to uint256
 // function intToUint256(number) {
 //     return ethers.utils.hexValue(number);
 // }
 
 function MintPage() {
+  // eslint-disable-next-line
+  // const [userConnect, setuserConnect] = useState(null);
+
   const [scrollTop, setScrollTop] = React.useState(false);
   React.useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -61,7 +66,7 @@ function MintPage() {
     mintCost: 0,
     paused: false,
     userNftIds: [],
-    unstakedNftIds:[],
+    unstakedNftIds: [],
     stakedNftIds: [],
     totalReward: 0,
   });
@@ -89,14 +94,17 @@ function MintPage() {
 
       const signer = provider.getSigner();
       const user = await signer.getAddress();
-      
+
+      // eslint-disable-next-line
+      // setuserConnect(user);
+
       const stakedTokens = await staking_contract.tokensOfOwner(user);
       const reward = await staking_contract.getTotalRewardEarned(user);
       const paused = await nft_contract.isPublicMint();
       const maxSupply = await nft_contract.maxSupply();
       const totalSupply = await nft_contract.totalSupply();
       // const mintCount = await nft_contract.getmintCount();
-      
+
       // var userTokens = [];
       var counter = 0;
       const maxMintAmountPerTx = await nft_contract.maxMintPerWallet();
@@ -105,16 +113,16 @@ function MintPage() {
       var tokenOfAddress = [];
       var unstaketokenOfAddress = [];
 
-      for (var i = 0;i < totalSupply;i++) {
+      for (var i = 0; i < totalSupply; i++) {
         const userOwn = await nft_contract.ownerOf(i);
         if (userOwn === user) {
           tokenOfAddress[counter] = i;
           unstaketokenOfAddress[counter] = i;
           counter++;
-          }
-          if (counter === nftUserBalance) {
-            break;
-          }
+        }
+        if (counter === nftUserBalance) {
+          break;
+        }
       }
 
       // console.log(unstaketokenOfAddress);
@@ -154,7 +162,7 @@ function MintPage() {
       setUserNfts(_userNfts);
     }
   };
-  
+
   // console.log("imgURI: "+userNfts)
 
   const mint = async () => {
@@ -220,10 +228,7 @@ function MintPage() {
           signer
         );
 
-        const approve_tx = await nft_contract.approve(
-          vaultContractAddress,
-          id
-        );
+        const approve_tx = await nft_contract.approve(vaultContractAddress, id);
         await approve_tx.wait();
 
         // console.log([id]);
@@ -270,7 +275,7 @@ function MintPage() {
   };
 
   const stakeAll = async () => {
-    const avalibeNft = info.unstakedNftIds
+    const avalibeNft = info.unstakedNftIds;
     // console.log("avalibe for stake: "+avalibeNft);
     // console.log("length: "+avalibeNft.length);
     if (data.network === networksMap[networkDeployedTo]) {
@@ -309,7 +314,6 @@ function MintPage() {
         window.alert("An error has occured, Please Try Again");
         console.log(error);
       }
-
     }
   };
 
@@ -374,7 +378,7 @@ function MintPage() {
   useEffect(() => {
     getInfo();
     console.log(data);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.account]);
 
   return (
@@ -386,7 +390,9 @@ function MintPage() {
           <div className="info-container">
             <Card>
               <Card.Body>
-                <Card.Title className="mb-3"><h3 className="text-center p-2">Minting Info</h3></Card.Title>
+                <Card.Title className="mb-3">
+                  <h3 className="text-center p-2">Minting Info</h3>
+                </Card.Title>
                 <Table responsive>
                   <tbody>
                     <tr>
@@ -411,71 +417,82 @@ function MintPage() {
                 </Table>
               </Card.Body>
             </Card>
+            {/* <Card className="mt-1">
+              <Card.Body>
+                <ReferralLinkGenerator address={userConnect} />
+              </Card.Body>
+            </Card> */}
           </div>
           <div className="info-container">
-            <Card >
-            <Card.Body>
-            <Card.Title className="mb-3"><h3 className="text-center p-2">Staking Info</h3></Card.Title>
-              <Table responsive>
-                <tbody>
-                  <tr>
-                    <td className="p-2">Your {info.nftName} </td>
-                    <td>[{info.userNftIds.join(", ")}]</td>
-                    {/* <td>{info.userNftIds.map((nft, index) => {
+            <Card>
+              <Card.Body>
+                <Card.Title className="mb-3">
+                  <h3 className="text-center p-2">Staking Info</h3>
+                </Card.Title>
+                <Table responsive>
+                  <tbody>
+                    <tr>
+                      <td className="p-2">Your {info.nftName} </td>
+                      <td>[{info.userNftIds.join(", ")}]</td>
+                      {/* <td>{info.userNftIds.map((nft, index) => {
                       return(<span >[#{nft}]</span> )
                     })}</td> */}
-                  </tr>
-                  <tr>
-                    <td className="p-2">Total Your Own</td>
-                    <td>{info.userNftIds.length} NFTs</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">Unstake NFTs</td>
-                    <td>{info.unstakedNftIds.length > 0 ? info.unstakedNftIds.map((nft, index) => {
-                      return(<span key={index}>[#{nft}]</span> )
-                    }) : '-'}</td>
-                    {/* <td>[{info.unstakedNftIds.join(",")}]</td> */}
-                  </tr>
-                  <tr>
-                    <td className="p-2">Staked NFTs</td>
-                    <td>[{info.stakedNftIds.join(", ")}]</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">Earned Reward</td>
-                    <td>
-                      {info.totalReward !== 0
-                        ? parseFloat(info.totalReward).toFixed(6)
-                        : 0}{" "}
-                      $SRC
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
+                    </tr>
+                    <tr>
+                      <td className="p-2">Total Your Own</td>
+                      <td>{info.userNftIds.length} NFTs</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2">Unstake NFTs</td>
+                      <td>
+                        {info.unstakedNftIds.length > 0
+                          ? info.unstakedNftIds.map((nft, index) => {
+                              return <span key={index}>[#{nft}]</span>;
+                            })
+                          : "-"}
+                      </td>
+                      {/* <td>[{info.unstakedNftIds.join(",")}]</td> */}
+                    </tr>
+                    <tr>
+                      <td className="p-2">Staked NFTs</td>
+                      <td>[{info.stakedNftIds.join(", ")}]</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2">Earned Reward</td>
+                      <td>
+                        {info.totalReward !== 0
+                          ? parseFloat(info.totalReward).toFixed(6)
+                          : 0}{" "}
+                        $SRC
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
               </Card.Body>
             </Card>
             <div style={{ textAlign: "center" }}>
-            <ButtonGroup aria-label="Basic example" className="mt-3">
-              <Button variant="warning" src="" onClick={claim}>
-                {loading ? (
-                  <CircularProgress color="inherit" size={18} />
-                ) : (
-                  "Claim Reward"
-                )}
-              </Button>
-              <Button variant="primary" src="" onClick={stakeAll}>
-                {loading ? (
-                  <CircularProgress color="inherit" size={18} />
-                ) : (
-                  "Stake All"
-                )}
-              </Button>
-              <Button variant="dark" src="" onClick={unstakeAll}>
-                {loading ? (
-                  <CircularProgress color="inherit" size={18} />
-                ) : (
-                  "Unstake All"
-                )}
-              </Button>
+              <ButtonGroup aria-label="Basic example" className="mt-3">
+                <Button variant="warning" src="" onClick={claim}>
+                  {loading ? (
+                    <CircularProgress color="inherit" size={18} />
+                  ) : (
+                    "Claim Reward"
+                  )}
+                </Button>
+                <Button variant="primary" src="" onClick={stakeAll}>
+                  {loading ? (
+                    <CircularProgress color="inherit" size={18} />
+                  ) : (
+                    "Stake All"
+                  )}
+                </Button>
+                <Button variant="dark" src="" onClick={unstakeAll}>
+                  {loading ? (
+                    <CircularProgress color="inherit" size={18} />
+                  ) : (
+                    "Unstake All"
+                  )}
+                </Button>
               </ButtonGroup>
             </div>
           </div>
@@ -538,10 +555,10 @@ function MintPage() {
                     <ToastContainer />
                     <div>
                       <Button
-                      variant="dark outline-dark"
-                      className="mt-3"
-                      onClick={mint}
-                      disabled={mintAmount === 0}
+                        variant="dark outline-dark"
+                        className="mt-3"
+                        onClick={mint}
+                        disabled={mintAmount === 0}
                       >
                         {loading ? (
                           <CircularProgress color="inherit" size={18} />
@@ -572,12 +589,12 @@ function MintPage() {
                       </div>
                       {info.stakedNftIds.includes(nft.id) ? (
                         <Button
-                        variant="dark"
-                        className="m-3"
-                        role="button"
-                        onClick={() => {
-                          unstakeItem(nft.id);
-                        }}
+                          variant="dark"
+                          className="m-3"
+                          role="button"
+                          onClick={() => {
+                            unstakeItem(nft.id);
+                          }}
                         >
                           {loading ? (
                             <CircularProgress color="inherit" size={18} />
@@ -587,12 +604,12 @@ function MintPage() {
                         </Button>
                       ) : (
                         <Button
-                        variant="outline-primary"
-                        className="m-3"
-                        role="button"
-                        onClick={() => {
-                          stakeItem(nft.id);
-                        }}
+                          variant="outline-primary"
+                          className="m-3"
+                          role="button"
+                          onClick={() => {
+                            stakeItem(nft.id);
+                          }}
                         >
                           {loading ? (
                             <CircularProgress color="inherit" size={18} />
