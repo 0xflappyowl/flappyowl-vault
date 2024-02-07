@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "IPikaBounchingCoin",
-  "sourceName": "contracts/interfaces/IPikaBounchingCoin.sol",
+  "contractName": "IFlappyRewardCoin",
+  "sourceName": "contracts/interfaces/IFlappyRewardCoin.sol",
   "abi": [
     {
       "inputs": [

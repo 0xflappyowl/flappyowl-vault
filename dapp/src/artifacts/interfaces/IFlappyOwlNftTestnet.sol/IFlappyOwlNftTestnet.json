@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "IPikaBounchingNft",
-  "sourceName": "contracts/interfaces/IPikaBounchingNft.sol",
+  "contractName": "IFlappyOwlNftTestnet",
+  "sourceName": "contracts/interfaces/IFlappyOwlNftTestnet.sol",
   "abi": [
     {
       "inputs": [

@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "IPBDescriptor",
-  "sourceName": "contracts/interfaces/IPBDescriptor.sol",
+  "contractName": "INftDescriptor",
+  "sourceName": "contracts/interfaces/INftDescriptor.sol",
   "abi": [
     {
       "inputs": [

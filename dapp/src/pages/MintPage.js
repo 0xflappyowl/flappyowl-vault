@@ -18,9 +18,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 // eslint-disable-next-line
 // import ReferralLinkGenerator from "../components/ReferralLinkGenerator.jsx"
-
-import stakingContract from "../artifacts/utils/StakingVault.sol/StakingVault.json";
-import nftContract from "../artifacts/ERC721/StakeableNft.sol/StakeableNft.json";
+import nftContract from "../artifacts/ERC721/FlappyOwlNftTestnet.sol/FlappyOwlNftTestnet.json";
+import stakingContract from "../artifacts/utils/FlappyOwlVault.sol/FlappyOwlVault.json";
 import {
   vaultContractAddress,
   nftContractAddress,

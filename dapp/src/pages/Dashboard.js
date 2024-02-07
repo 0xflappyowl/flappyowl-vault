@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import { Form } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
 
-import nftContract from "../artifacts/ERC721/StakeableNft.sol/StakeableNft.json";
+import nftContract from "../artifacts/ERC721/FlappyOwlNftTestnet.sol/FlappyOwlNftTestnet.json";
 import {
   nftContractAddress,
   ownerAddress,
@@ -204,7 +204,7 @@ const Dashboard = () => {
     if (window.ethereum !== undefined) {
       getAppInfo();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.account]);
 
   return (
